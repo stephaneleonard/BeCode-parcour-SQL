@@ -8,6 +8,7 @@ define("HEIGHT_DIFF",     "height_difference");
 define("AVAILABLE",     "available");
 
 require_once('model/hikingModel.php');
+require_once('model/userModel.php');
 
 
 function sanatizeHikingForm()
@@ -29,6 +30,27 @@ function sanatizeHikingForm()
     return $result;
 }
 
+function createSession($name, $password)
+{
+    $userManager = new StephaneLeonard\hiking\Model\UserManager();
+    $userList = $userManager->getUserData($name);
+    $res = $userList->fetch();
+    if ($password == $res['password']) {
+        $_SESSION['login'] = $name;
+        $_SESSION['pwd'] = $password;
+    }
+    else{
+        throw new UnexpectedValueException('error in connecting user');
+    }
+}
+
+function endSession()
+{
+    session_unset();
+
+    // On détruit notre session
+    session_destroy();
+}
 function getReadPage()
 {
     $hikingManager = new StephaneLeonard\hiking\Model\HikingManager();
@@ -47,7 +69,7 @@ function getCreatePage()
         $result = sanatizeHikingForm();
         //validate data
         //push to database
-        $res = $hikingManager->setHikingDatas($result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF] , $result[AVAILABLE]);
+        $res = $hikingManager->setHikingDatas($result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF], $result[AVAILABLE]);
         if (!$res) {
             throw new UnexpectedValueException('error in inserting to database');
         }
@@ -64,7 +86,7 @@ function getUpdatePage()
         $result = sanatizeHikingForm();
         //validate data
         //push to database 
-        $res = $hikingManager->updateHikingData($id, $result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF] , $result[AVAILABLE]);
+        $res = $hikingManager->updateHikingData($id, $result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF], $result[AVAILABLE]);
         if (!$res) {
             throw new UnexpectedValueException('error in updating to database');
         }
@@ -86,4 +108,17 @@ function getdeletePage()
         throw new UnexpectedValueException('error in updating to database');
     }
     require 'view/delete.php';
+}
+
+function getConnectPage()
+{
+    if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) {
+        endSession();
+        header('Location: http://localhost');
+    }
+    if (isset($_POST['name'])) {
+        createSession($_POST['name'], $_POST['password']);
+        header('Location: http://localhost');
+    }
+    require 'view/connect.php';
 }

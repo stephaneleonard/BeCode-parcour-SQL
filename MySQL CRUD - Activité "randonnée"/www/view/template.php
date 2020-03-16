@@ -1,3 +1,7 @@
+<?php
+var_dump($_SESSION['login']);
+var_dump($_SESSION['pwd']);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -24,6 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="?Page=ajouter">Ajouter</a>
                     </li>
+                    <?php if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="?Page=connect">Se Déconnecter</a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </nav>

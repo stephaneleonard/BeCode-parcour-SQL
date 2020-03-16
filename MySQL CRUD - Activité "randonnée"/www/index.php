@@ -1,4 +1,7 @@
 <?php
+session_start();
+define('LOGIN', 'login');
+define('PWD', 'pwd');
 try {
     require_once './controller/controller.php';
     if (isset($_GET['Page'])) {
@@ -6,22 +9,36 @@ try {
             $name = 'liste randonnée';
             getReadPage();
         } elseif (htmlspecialchars($_GET['Page']) == 'ajouter') {
-            $name = 'ajouter une  randonnée';
-            getCreatePage();
-        } elseif (htmlspecialchars($_GET['Page']) == 'maj') {
-            $name = 'mettre à jour une  randonnée';
-            if (isset($_GET['id'])) {
-                getUpdatePage();
+            if (isset($_SESSION[LOGIN]) && isset($_SESSION[PWD])) {
+                $name = 'ajouter une  randonnée';
+                getCreatePage();
             } else {
-                throw new UnexpectedValueException('error getting value from database');
+                getConnectPage();
+            }
+        } elseif (htmlspecialchars($_GET['Page']) == 'maj') {
+            if (isset($_SESSION[LOGIN]) && isset($_SESSION[PWD])) {
+                $name = 'mettre à jour une  randonnée';
+                if (isset($_GET['id'])) {
+                    getUpdatePage();
+                } else {
+                    throw new UnexpectedValueException('error getting value from database');
+                }
+            } else {
+                getConnectPage();
             }
         } elseif (htmlspecialchars($_GET['Page']) == 'supprimer') {
-            $name = 'supprimer une  randonnée';
-            if (isset($_GET['id'])) {
-                getdeletePage();
+            if (isset($_SESSION[LOGIN]) && isset($_SESSION[PWD])) {
+                $name = 'supprimer une  randonnée';
+                if (isset($_GET['id'])) {
+                    getdeletePage();
+                } else {
+                    throw new UnexpectedValueException('error getting value from database');
+                }
             } else {
-                throw new UnexpectedValueException('error getting value from database');
+                getConnectPage();
             }
+        } elseif (htmlspecialchars($_GET['Page']) == 'connect') {
+            getConnectPage();
         }
     } else {
         $name = 'liste randonnée';
