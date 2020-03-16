@@ -11,11 +11,11 @@
 		<div>
 			<label for="difficulty">Difficulté</label>
 			<select name="difficulty">
-				<option value="très facile">Très facile</option>
-				<option value="facile">Facile</option>
-				<option value="moyen">Moyen</option>
-				<option value="difficile">Difficile</option>
-				<option value="très difficile">Très difficile</option>
+				<option value="Très facile">Très facile</option>
+				<option value="Facile">Facile</option>
+				<option value="Moyen">Moyen</option>
+				<option value="Difficile">Difficile</option>
+				<option value="Très difficile">Très difficile</option>
 			</select>
 		</div>
 

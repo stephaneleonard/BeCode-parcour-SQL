@@ -10,7 +10,12 @@ try {
             getCreatePage();
         } elseif (htmlspecialchars($_GET['Page']) == 'maj') {
             $name = 'mettre à jour une  randonnée';
-            getUpdatePage();
+            if (isset($_GET['id'])) {
+                getUpdatePage();
+            }
+            else{
+                throw new UnexpectedValueException('error getting value from database');
+            }
         } elseif (htmlspecialchars($_GET['Page']) == 'supprimer') {
             $name = 'supprimer une  randonnée';
             echo 'supprmier';

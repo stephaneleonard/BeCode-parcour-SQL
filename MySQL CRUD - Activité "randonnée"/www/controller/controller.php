@@ -6,7 +6,7 @@ require_once('model/hikingModel.php');
 function getReadPage()
 {
     $hikingManager = new StephaneLeonard\hiking\Model\HikingManager();
-    $content = $hikingManager->getHikingData();
+    $content = $hikingManager->getHikingDatas();
     if (!$content) {
         throw new UnexpectedValueException('getting data from database');
     }
@@ -25,7 +25,7 @@ function getCreatePage()
         $height_difference = $_POST['height_difference'];
         //validate data
         //push to database
-        $res = $hikingManager->setHikingData($name, $difficulty, $distance, $duration, $height_difference);
+        $res = $hikingManager->setHikingDatas($name, $difficulty, $distance, $duration, $height_difference);
         if (!$res) {
             throw new UnexpectedValueException('error in inserting to database');
         }
@@ -36,5 +36,26 @@ function getCreatePage()
 function getUpdatePage()
 {
     $hikingManager = new StephaneLeonard\hiking\Model\HikingManager();
+    $id = $_GET['id'];
+    if (isset($_POST['name'])) {
+        //sanatize data
+        $name = $_POST['name'];
+        $difficulty = $_POST['difficulty'];
+        $distance = $_POST['distance'];
+        $duration = $_POST['duration'];
+        $height_difference = $_POST['height_difference'];
+        //validate data
+        //push to database 
+        $res = $hikingManager->updateHikingData($id, $name, $difficulty, $distance, $duration, $height_difference);
+        if (!$res) {
+            throw new UnexpectedValueException('error in updating to database');
+        }
+    }
+    $data = $hikingManager->getHikingData($id);
+    $content = $data->fetch();
+    if (!$content) {
+        throw new UnexpectedValueException('error getting value from database');
+    }
+
     require 'view/update.php';
 }

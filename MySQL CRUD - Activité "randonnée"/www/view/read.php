@@ -14,7 +14,7 @@
     while ($data = $content->fetch()) {
     ?>
       <tr>
-        <td><?= $data['name'] ?></td>
+        <td><a href="?Page=maj&id=<?= $data["id"]?>"><?= $data['name'] ?></a></td>
         <td><?= $data['difficulty'] ?></td>
         <td><?= $data['distance'] ?></td>
         <td><?= $data['duration'] ?></td>
