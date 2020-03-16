@@ -17,9 +17,9 @@
       <tr>
         <td><a href="?Page=maj&id=<?= $data["id"] ?>"><?= $data['name'] ?></a></td>
         <td><?= $data['difficulty'] ?></td>
-        <td><?= $data['distance'] ?></td>
+        <td><?= $data['distance'] ?> km</td>
         <td><?= $data['duration'] ?></td>
-        <td><?= $data['height_difference'] ?></td>
+        <td><?= $data['height_difference'] ?> m</td>
         <td>
           <a href="?Page=supprimer&id=<?= $data["id"] ?>" class="btn btn-secondary">X</a>
         </td>
