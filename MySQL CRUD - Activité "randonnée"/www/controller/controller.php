@@ -59,3 +59,13 @@ function getUpdatePage()
 
     require 'view/update.php';
 }
+
+function getdeletePage()
+{
+    $hikingManager = new StephaneLeonard\hiking\Model\HikingManager();
+    $res = $hikingManager->deleteHikingData($_GET['id']);
+    if (!$res) {
+        throw new UnexpectedValueException('error in updating to database');
+    }
+    require 'view/delete.php';
+}

@@ -34,4 +34,12 @@ class HikingManager extends Manager
         $statement = $db->prepare($sql);
         return  $statement->execute();
     }
+
+    public function deleteHikingData($id)
+    {
+        $sql = "DELETE FROM `hiking` WHERE `id`=$id";
+        $db = $this->dbConnect();
+        $statement = $db->prepare($sql);
+        return  $statement->execute();
+    }
 }
