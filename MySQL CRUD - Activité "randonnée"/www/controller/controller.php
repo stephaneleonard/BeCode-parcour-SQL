@@ -51,7 +51,7 @@ function createSession($name, $password)
     $userManager = new StephaneLeonard\hiking\Model\UserManager();
     $userList = $userManager->getUserData($name);
     $res = $userList->fetch();
-    if ($password == $res[PASSWORD]) {
+    if (sha1($password) == $res[PASSWORD]) {
         $_SESSION['login'] = $name;
         $_SESSION['pwd'] = $password;
     } else {
