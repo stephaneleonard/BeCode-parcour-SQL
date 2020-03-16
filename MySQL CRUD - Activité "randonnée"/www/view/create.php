@@ -31,6 +31,13 @@
 			<label for="height_difference">Dénivelé</label>
 			<input type="text" name="height_difference" value="">
 		</div>
+		<div>
+			<label for="available">Disponible</label>
+			<select name="available">
+				<option value="1">Disponible</option>
+				<option value="0">Indisponible</option>
+			</select>
+		</div>
 		<button type="submit" name="button">Envoyer</button>
 	</form>
 </div>

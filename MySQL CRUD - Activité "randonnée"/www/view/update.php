@@ -35,6 +35,13 @@ ob_start();
 			<label for="height_difference">Dénivelé</label>
 			<input type="text" name="height_difference" value="<?= $content['height_difference'] ?>">
 		</div>
+		<div>
+			<label for="available">Disponible</label>
+			<select name="available">
+				<option value="1" <?= $content['available'] == 1 ? SELECTED : '' ?>>Disponible</option>
+				<option value="0" <?= $content['available'] == 0 ? SELECTED : '' ?>>Indisponible</option>
+			</select>
+		</div>
 		<button type="submit" name="button">Envoyer</button>
 	</form>
 </div>

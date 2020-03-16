@@ -19,17 +19,17 @@ class HikingManager extends Manager
         return $db->query('SELECT * FROM hiking');
     }
 
-    public function setHikingDatas($name, $difficulty, $distance, $duration, $height_difference)
+    public function setHikingDatas($name, $difficulty, $distance, $duration, $height_difference, $available)
     {
-        $sql = "INSERT INTO `hiking` (`name`, `difficulty`, `distance`, `duration`, `height_difference`) VALUES ('$name' , '$difficulty' , $distance , '$duration' , $height_difference)";
+        $sql = "INSERT INTO `hiking` (`name`, `difficulty`, `distance`, `duration`, `height_difference`, `available`) VALUES ('$name' , '$difficulty' , $distance , '$duration' , $height_difference, $available)";
         $db = $this->dbConnect();
         $statement = $db->prepare($sql);
         return  $statement->execute();
     }
 
-    public function updateHikingData($id, $name, $difficulty, $distance, $duration, $height_difference)
+    public function updateHikingData($id, $name, $difficulty, $distance, $duration, $height_difference, $available)
     {
-        $sql = "UPDATE `hiking` SET `name`='$name',`difficulty`='$difficulty',`distance`=$distance,`duration`='$duration',`height_difference`=$height_difference WHERE `id`=$id";
+        $sql = "UPDATE `hiking` SET `name`='$name',`difficulty`='$difficulty',`distance`=$distance,`duration`='$duration',`height_difference`=$height_difference, `available`=$available WHERE `id`=$id";
         $db = $this->dbConnect();
         $statement = $db->prepare($sql);
         return  $statement->execute();

@@ -9,6 +9,7 @@
       <th id='distance' scope="col">distance</th>
       <th id='durée' scope="col">durée</th>
       <th id='Déniv.+' scope="col">Déniv.+</th>
+      <th id='Dispo' scope="col">Disponible</th>
       <th id='Delete' scope="col">Supprimer</th>
     </tr>
     <?php
@@ -20,6 +21,7 @@
         <td><?= $data['distance'] ?> km</td>
         <td><?= $data['duration'] ?></td>
         <td><?= $data['height_difference'] ?> m</td>
+        <td><?= $data['available'] == 1 ? 'Disponible' : 'Indisponible' ?></td>
         <td>
           <a href="?Page=supprimer&id=<?= $data["id"] ?>" class="btn btn-secondary">X</a>
         </td>

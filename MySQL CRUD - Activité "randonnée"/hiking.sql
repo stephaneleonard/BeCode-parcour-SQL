@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Generation Time: Mar 16, 2020 at 11:07 AM
+-- Generation Time: Mar 16, 2020 at 11:32 AM
 -- Server version: 8.0.19
 -- PHP Version: 7.4.1
 
@@ -34,19 +34,20 @@ CREATE TABLE `hiking` (
   `difficulty` char(30) NOT NULL,
   `distance` int NOT NULL,
   `duration` time NOT NULL,
-  `height_difference` int NOT NULL
+  `height_difference` int NOT NULL,
+  `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `hiking`
 --
 
-INSERT INTO `hiking` (`id`, `name`, `difficulty`, `distance`, `duration`, `height_difference`) VALUES
-(1, 'Deux boucles de Bras Sec à Palmiste Rouge', 'Moyen', 12, '05:00:00', 850),
-(2, 'Le Sentier des Sources entre Cilaos et Bras Sec', 'Facile', 5, '01:14:00', 280),
-(3, 'Le sommet du Piton Béthoune par le tour du Bonnet de Prêtre', 'Très difficile', 6, '04:00:00', 650),
-(4, 'Le Dimitile depuis Bras Sec par le Kerveguen', 'Difficile', 25, '10:00:00', 1550),
-(8, 'La marche de la mort', 'Très difficile', 100, '12:00:00', 1000);
+INSERT INTO `hiking` (`id`, `name`, `difficulty`, `distance`, `duration`, `height_difference`, `available`) VALUES
+(1, 'Deux boucles de Bras Sec à Palmiste Rouge', 'Moyen', 12, '05:00:00', 850, 0),
+(2, 'Le Sentier des Sources entre Cilaos et Bras Sec', 'Facile', 5, '01:14:00', 280, 1),
+(3, 'Le sommet du Piton Béthoune par le tour du Bonnet de Prêtre', 'Très difficile', 6, '04:00:00', 650, 1),
+(4, 'Le Dimitile depuis Bras Sec par le Kerveguen', 'Difficile', 25, '10:00:00', 1550, 1),
+(8, 'La marche de la mort', 'Très difficile', 100, '12:00:00', 1000, 0);
 
 --
 -- Indexes for dumped tables
@@ -66,7 +67,7 @@ ALTER TABLE `hiking`
 -- AUTO_INCREMENT for table `hiking`
 --
 ALTER TABLE `hiking`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

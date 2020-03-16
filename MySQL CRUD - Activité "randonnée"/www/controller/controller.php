@@ -5,6 +5,7 @@ define("DIFFICULTY",     "difficulty");
 define("DISTANCE",     "distance");
 define("DURATION",     "duration");
 define("HEIGHT_DIFF",     "height_difference");
+define("AVAILABLE",     "available");
 
 require_once('model/hikingModel.php');
 
@@ -17,7 +18,9 @@ function sanatizeHikingForm()
         DISTANCE => FILTER_SANITIZE_NUMBER_FLOAT,
         DIFFICULTY => FILTER_SANITIZE_STRING,
         DURATION => FILTER_SANITIZE_STRING,
-        HEIGHT_DIFF => FILTER_SANITIZE_NUMBER_FLOAT
+        HEIGHT_DIFF => FILTER_SANITIZE_NUMBER_FLOAT,
+        AVAILABLE => FILTER_SANITIZE_NUMBER_INT
+
     ];
     $result = filter_input_array(INPUT_POST, $options);
     foreach ($result as $key => $value) {
@@ -44,7 +47,7 @@ function getCreatePage()
         $result = sanatizeHikingForm();
         //validate data
         //push to database
-        $res = $hikingManager->setHikingDatas($result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF]);
+        $res = $hikingManager->setHikingDatas($result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF] , $result[AVAILABLE]);
         if (!$res) {
             throw new UnexpectedValueException('error in inserting to database');
         }
@@ -61,7 +64,7 @@ function getUpdatePage()
         $result = sanatizeHikingForm();
         //validate data
         //push to database 
-        $res = $hikingManager->updateHikingData($id, $result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF]);
+        $res = $hikingManager->updateHikingData($id, $result[NAME], $result[DIFFICULTY], $result[DISTANCE], $result[DURATION], $result[HEIGHT_DIFF] , $result[AVAILABLE]);
         if (!$res) {
             throw new UnexpectedValueException('error in updating to database');
         }
