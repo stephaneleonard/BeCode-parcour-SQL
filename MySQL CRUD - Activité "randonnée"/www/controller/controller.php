@@ -6,6 +6,8 @@ define("DISTANCE",     "distance");
 define("DURATION",     "duration");
 define("HEIGHT_DIFF",     "height_difference");
 define("AVAILABLE",     "available");
+define("LOCALHOST",     "Location: http://localhost");
+define('PASSWORD', 'password');
 
 require_once('model/hikingModel.php');
 require_once('model/userModel.php');
@@ -24,7 +26,21 @@ function sanatizeHikingForm()
 
     ];
     $result = filter_input_array(INPUT_POST, $options);
-    foreach ($result as $key => $value) {
+    foreach ($result as $key) {
+        $result[$key] = trim($result[$key]);
+    }
+    return $result;
+}
+
+function sanatizeConnectForm()
+{
+    $options = [
+
+        NAME => FILTER_SANITIZE_STRING,
+        PASSWORD => FILTER_SANITIZE_STRING,
+    ];
+    $result = filter_input_array(INPUT_POST, $options);
+    foreach ($result as $key) {
         $result[$key] = trim($result[$key]);
     }
     return $result;
@@ -35,11 +51,10 @@ function createSession($name, $password)
     $userManager = new StephaneLeonard\hiking\Model\UserManager();
     $userList = $userManager->getUserData($name);
     $res = $userList->fetch();
-    if ($password == $res['password']) {
+    if ($password == $res[PASSWORD]) {
         $_SESSION['login'] = $name;
         $_SESSION['pwd'] = $password;
-    }
-    else{
+    } else {
         throw new UnexpectedValueException('error in connecting user');
     }
 }
@@ -73,6 +88,7 @@ function getCreatePage()
         if (!$res) {
             throw new UnexpectedValueException('error in inserting to database');
         }
+        header(LOCALHOST);
     }
     require 'view/create.php';
 }
@@ -90,6 +106,7 @@ function getUpdatePage()
         if (!$res) {
             throw new UnexpectedValueException('error in updating to database');
         }
+        header(LOCALHOST);
     }
     $data = $hikingManager->getHikingData($id);
     $content = $data->fetch();
@@ -114,11 +131,13 @@ function getConnectPage()
 {
     if (isset($_SESSION['login']) && isset($_SESSION['pwd'])) {
         endSession();
-        header('Location: http://localhost');
+        header(LOCALHOST);
     }
     if (isset($_POST['name'])) {
-        createSession($_POST['name'], $_POST['password']);
-        header('Location: http://localhost');
+        $res = sanatizeConnectForm();
+        createSession($res['name'], $res[PASSWORD]);
+        header(LOCALHOST);
+    } else {
+        require 'view/connect.php';
     }
-    require 'view/connect.php';
 }

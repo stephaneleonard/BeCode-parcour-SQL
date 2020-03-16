@@ -1,7 +1,3 @@
-<?php
-var_dump($_SESSION['login']);
-var_dump($_SESSION['pwd']);
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
