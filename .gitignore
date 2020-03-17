@@ -1,4 +1,5 @@
 mysql/
 logs/
 apache2/
+node_modules/
 
