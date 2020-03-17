@@ -127,6 +127,28 @@ define('CARDNUM', 'cardNumber');
             </tbody>
         </table>
     </section>
+    <section class="my-20">
+        <h2 class="text-xl">Exercice 6</h2>
+
+        <?php while ($data = $sortedShow->fetch()) { ?>
+            <p><?= $data['title'] ?> par <?= $data['performer'] ?> , le <?= $data['date'] ?> à <?= $data['startTime'] ?></p>
+
+        <?php } ?>
+    </section>
+    <section class="my-20">
+        <h2 class="text-xl">Exercice 7</h2>
+        <div class="flex flex-wrap">
+            <?php while ($data = $clientsA->fetch()) { ?>
+                <div class="w-1/3 mb-4 border-solid border-2 border-gray-600">
+                    <p>Nom : <?= $data[LASTNAME] ?></p>
+                    <p>Prénom : <?= $data[FIRSTNAME] ?></p>
+                    <p>Date de naissance : <?= $data[BIRTHDATE] ?></p>
+                    <p>Carte de fidélité : <?= $data['card'] ? 'Yes' : 'No' ?></p>
+                    <p>Numéro de carte : <?= $data['card'] ? $data[CARDNUM] : '' ?></p>
+                </div>
+            <?php } ?>
+        </div>
+    </section>
 </div>
 
 <?php $content = ob_get_clean(); ?>

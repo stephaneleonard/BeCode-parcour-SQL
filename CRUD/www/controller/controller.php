@@ -38,6 +38,19 @@ function getReadPage()
     if (!$clientsStartWithM) {
         throw new UnexpectedValueException(ERR);
     }
+
+    //EX6
+    $sortedShow = $showManager->getDatas('shows',['title' , 'performer' , 'date' , 'startTime'] ,[] , 'title' , 'ASC');
+    if (!$sortedShow) {
+        throw new UnexpectedValueException(ERR);
+    }
+
+
+    //EX7
+    $clientsA = $clientsManager->getDatas('clients');
+    if (!$clientsA) {
+        throw new UnexpectedValueException(ERR);
+    }
     require 'view/readView.php';
 }
 
