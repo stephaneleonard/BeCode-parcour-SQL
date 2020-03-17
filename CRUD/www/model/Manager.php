@@ -15,7 +15,7 @@ class Manager
         } else {
             $var = "";
             foreach ($variable as $key => $value) {
-                if ($key == count($variable)-1) {
+                if ($key == count($variable) - 1) {
                     $var = $var . $value;
                 } else {
                     $var = $var . $value . ", ";
@@ -35,8 +35,13 @@ class Manager
         $sort = $asc ? $asc : "";
         $lim = $limit ? " LIMIT $limit" : "";
         $sql = $firstPart . $table . $cond . $order . $sort . $lim;
-        var_dump($sql);
         $db = $this->dbConnect();
         return $db->query($sql);
+    }
+
+    public function setDatas($var, $param = [], $value  = [])
+    {
+        $firstPart = "INSERT INTO $var ";
+        $db = $this->dbConnect();
     }
 }
