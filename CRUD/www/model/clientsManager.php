@@ -13,9 +13,14 @@ class ClientsManager extends Manager
         return $db->query("SELECT * FROM user WHERE id = '$id'");
     }
 
-    public function getClientsDatas()
+    public function getClientsDatas($condition  = [] , $orderBy = null , $asc = null , $limit = null)
     {
+        $firstPart = "SELECT * FROM clients";
+        $order = $orderBy ? " ORDER BY $orderBy " : "";
+        $sort = $asc ? $asc : "";
+        $lim = $limit ? " LIMIT $limit" : "";
+        $sql = $firstPart . $order . $sort . $lim;
         $db = $this->dbConnect();
-        return $db->query("SELECT * FROM clients");
+        return $db->query($sql);
     }
 }
