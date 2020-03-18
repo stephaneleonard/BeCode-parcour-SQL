@@ -1,8 +1,4 @@
 <?php ob_start();
-define('LASTNAME', 'lastName');
-define('FIRSTNAME', 'firstName');
-define('BIRTHDATE', 'birthDate');
-define('CARDNUM', 'cardNumber');
 
 ?>
 <div class="container mx-auto">

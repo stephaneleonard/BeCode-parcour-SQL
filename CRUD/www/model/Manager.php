@@ -41,7 +41,55 @@ class Manager
 
     public function setDatas($var, $param = [], $value  = [])
     {
+        //sql example INSERT INTO `shows`(`id`, `title`, `performer`, `date`, `showTypesId`, `firstGenresId`, `secondGenreId`, `duration`, `startTime`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9])
         $firstPart = "INSERT INTO $var ";
+        //get all param in a ()
+        if (count($param) != count($value)) {
+            throw new \UnexpectedValueException('error in number of parameters');
+        } else {
+            $p = "(" . implode(',', $param) . ") ";
+        }
+        //get all value in a ()
+        $v = "(" . str_repeat(" ? , ", count($value) - 1) . " ? )";
+
+        //bind value to param
+
+
+        //create SQL request
+        $sql = $firstPart . $p . "VALUES " . $v;
         $db = $this->dbConnect();
+        $prep = $db->prepare($sql);
+        var_dump($value);
+        var_dump($prep);
+        return $prep->execute($value);
+    }
+    public function updateDatas($var, $param = [], $value  = [], $condition  = [])
+    {
+        //sql UPDATE `clients` SET `id`=[value-1],`lastName`=[value-2],`firstName`=[value-3],`birthDate`=[value-4],`card`=[value-5],`cardNumber`=[value-6] WHERE 1
+        $firstPart = "UPDATE $var SET";
+        if (count($param) != count($value)) {
+            throw new \UnexpectedValueException('error in number of parameters');
+        }
+        $p = "";
+        foreach ($param as $key => $data) {
+            if ($key == count($param) - 1) {
+                $p = $p . $data . "=" . $value[$key];
+            } else {
+                $p = $p . $data . "=" . $value[$key] . ", ";
+            }
+        }
+        $cond = "";
+        if (!empty($condition)) {
+            $cond = $cond . " WHERE ";
+        }
+        foreach ($condition as $value) {
+            $cond = $cond . $value;
+        }
+        $sql = $firstPart . $p . "VALUES " . $cond;
+        $db = $this->dbConnect();
+        $prep = $db->prepare($sql);
+        var_dump($value);
+        var_dump($prep);
+        return $prep->execute($value);
     }
 }
