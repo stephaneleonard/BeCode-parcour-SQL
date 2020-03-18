@@ -66,30 +66,44 @@ class Manager
     public function updateDatas($var, $param = [], $value  = [], $condition  = [])
     {
         //sql UPDATE `clients` SET `id`=[value-1],`lastName`=[value-2],`firstName`=[value-3],`birthDate`=[value-4],`card`=[value-5],`cardNumber`=[value-6] WHERE 1
-        $firstPart = "UPDATE $var SET";
+        $firstPart = "UPDATE $var SET ";
         if (count($param) != count($value)) {
             throw new \UnexpectedValueException('error in number of parameters');
         }
         $p = "";
         foreach ($param as $key => $data) {
             if ($key == count($param) - 1) {
-                $p = $p . $data . "=" . $value[$key];
+                $p = $p . $data . "= ?";
             } else {
-                $p = $p . $data . "=" . $value[$key] . ", ";
+                $p = $p . $data . "= ? ,  ";
             }
         }
         $cond = "";
         if (!empty($condition)) {
             $cond = $cond . " WHERE ";
         }
-        foreach ($condition as $value) {
-            $cond = $cond . $value;
+        foreach ($condition as $d) {
+            $cond = $cond . $d;
         }
-        $sql = $firstPart . $p . "VALUES " . $cond;
+        $sql = $firstPart . $p . $cond;
         $db = $this->dbConnect();
         $prep = $db->prepare($sql);
-        var_dump($value);
-        var_dump($prep);
         return $prep->execute($value);
+    }
+    public function deleteDatas($var, $condition  = [])
+    {
+        //sql DELETE FROM `clients` WHERE 0
+        $firstPart = "DELETE FROM $var ";
+        $cond = "";
+        if (!empty($condition)) {
+            $cond = $cond . " WHERE ";
+        }
+        foreach ($condition as $d) {
+            $cond = $cond . $d;
+        }
+        $sql = $firstPart . $cond;
+        $db = $this->dbConnect();
+        $prep = $db->prepare($sql);
+        return $prep->execute();
     }
 }
